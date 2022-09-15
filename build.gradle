@@ -75,6 +75,7 @@ jar {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            artifactId = "default-server-properties"
             artifact(remapJar) {
                 builtBy remapJar
             }
