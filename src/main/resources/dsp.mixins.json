@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "pro.mikey.mods.dsp.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "server": [
+    "DedicatedServerPropertiesMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

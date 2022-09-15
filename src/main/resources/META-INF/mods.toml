@@ -1,0 +1,29 @@
+modLoader = "javafml"
+loaderVersion = "[40,)"
+license = "All rights reserved"
+
+[[mods]]
+modId = "dsp"
+version = "${version}"
+displayName = "Default Server Properties"
+description = '''
+Allows modpack developers to define default server properties. Typically used for things like a default level type.
+'''
+displayTest="IGNORE_ALL_VERSION"
+
+[[dependencies.dsp]]
+modId = "forge"
+mandatory = true
+versionRange = "[40,)"
+ordering = "NONE"
+side = "SERVER"
+
+# And another dependency, use this if you want to require a certain Minecraft version.
+[[dependencies.dsp]]
+modId = "minecraft"
+mandatory = true
+# See above for how to read this notation, this essentially means any
+# version of Minecraft from 1.18.2 (inclusive).
+versionRange = "[1.18.2,)"
+ordering = "NONE"
+side = "BOTH"
