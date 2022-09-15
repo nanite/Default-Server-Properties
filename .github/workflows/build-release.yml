@@ -3,7 +3,7 @@ name: Build & Release
 on:
   push:
     tags:
-      - 'release/**/*'
+      - 'release/*'
 
 jobs:
   build:
