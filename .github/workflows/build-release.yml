@@ -3,15 +3,15 @@ name: Build & Release
 on:
   push:
     tags:
-      - 'release/*'
+      - 'release/**/*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      with:
-        fetch-depth: 30 # Gets the last 30 commits so the changelog might work
+        with:
+          fetch-depth: 30 # Gets the last 30 commits so the changelog might work
       - uses: actions/cache@v3
         with:
           path: |
