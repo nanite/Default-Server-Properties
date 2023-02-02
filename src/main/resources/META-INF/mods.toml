@@ -1,13 +1,15 @@
 modLoader = "javafml"
 loaderVersion = "[40,)"
 license = "All rights reserved"
+issueTrackerURL="https://github.com/nanite/Default-Server-Properties/issues"
 
 [[mods]]
 modId = "dsp"
+displayURL="https://github.com/nanite/Default-Server-Properties"
 version = "${version}"
 displayName = "Default Server Properties"
 description = '''
-Allows modpack developers to define default server properties. Typically used for things like a default level type.
+Simple mod that allows modpack developers to define a default server properties file. This is typically used for settings like the default_level_type.
 '''
 displayTest="IGNORE_ALL_VERSION"
 

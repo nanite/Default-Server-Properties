@@ -1,4 +1,5 @@
-### Updates
+## [1.0.1]
 
-#### Added
-- Initial project release!
+### Fixed
+
+- Added the minVersion to the mixins file to stop errors showing.
