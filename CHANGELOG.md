@@ -1,10 +1,5 @@
-## [74.1.2]
+## [77.1.0]
 
 ### Changed
 
-- Migrated to architectury to allow the mod to work for Forge and Fabric
-- Migrated to a new versioning schema...
-
-### Fixed
-
-- Removed a redundant system print in the mixin
+- Ported to 1.19.2
