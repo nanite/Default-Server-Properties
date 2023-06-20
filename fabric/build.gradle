@@ -51,6 +51,7 @@ remapJar {
     injectAccessWidener = true
     input.set shadowJar.archiveFile
     dependsOn shadowJar
+    archiveBaseName.set "${rootProject.archives_base_name}-${project.name}"
     setArchiveClassifier(null)
 }
 
@@ -96,7 +97,7 @@ if (ENV.CURSE_TOKEN) {
         apiKey = ENV.CURSE_TOKEN
         project {
             id = rootProject.curseforge_id
-            releaseType = "release"
+            releaseType = "beta"
             addGameVersion "Fabric"
             addGameVersion "Java 17"
             addGameVersion "${rootProject.minecraft_version}"
