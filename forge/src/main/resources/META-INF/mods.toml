@@ -1,12 +1,13 @@
 modLoader = "javafml"
-loaderVersion = "[40,)"
-license = "All rights reserved"
+loaderVersion = "[${forgemajor},)"
+license = "Mozilla Public License 2.0"
 issueTrackerURL="https://github.com/nanite/Default-Server-Properties/issues"
 
 [[mods]]
 modId = "dsp"
-displayURL="https://github.com/nanite/Default-Server-Properties"
 version = "${version}"
+authors = "ErrorMikey"
+credits = "Nanite Team"
 displayName = "Default Server Properties"
 description = '''
 Simple mod that allows modpack developers to define a default server properties file. This is typically used for settings like the default_level_type.
@@ -16,16 +17,13 @@ displayTest="IGNORE_ALL_VERSION"
 [[dependencies.dsp]]
 modId = "forge"
 mandatory = true
-versionRange = "[40,)"
+versionRange = "[${forgemajor},)"
 ordering = "NONE"
 side = "SERVER"
 
-# And another dependency, use this if you want to require a certain Minecraft version.
 [[dependencies.dsp]]
 modId = "minecraft"
 mandatory = true
-# See above for how to read this notation, this essentially means any
-# version of Minecraft from 1.18.2 (inclusive).
-versionRange = "[1.18.2,)"
+versionRange = "[${mcversion},)"
 ordering = "NONE"
-side = "BOTH"
+side = "SERVER"

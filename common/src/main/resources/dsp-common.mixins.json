@@ -1,12 +1,8 @@
 {
   "required": true,
-  "package": "pro.mikey.mods.dsp.mixin",
+  "package": "dev.nanite.dsp.mixin",
   "compatibilityLevel": "JAVA_17",
-  "minVersion": "0.8.0",
-  "mixins": [
-  ],
-  "client": [
-  ],
+  "minVersion": "0.8",
   "server": [
     "DedicatedServerPropertiesMixin"
   ],

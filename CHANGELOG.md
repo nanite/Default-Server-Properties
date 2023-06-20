@@ -1,5 +1,10 @@
-## [1.0.1]
+## [74.1.2]
+
+### Changed
+
+- Migrated to architectury to allow the mod to work for Forge and Fabric
+- Migrated to a new versioning schema...
 
 ### Fixed
 
-- Added the minVersion to the mixins file to stop errors showing.
+- Removed a redundant system print in the mixin

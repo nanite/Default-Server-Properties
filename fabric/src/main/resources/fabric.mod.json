@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "dsp",
+  "version": "${version}",
+  "name": "Default Server Properties",
+  "description": "Simple mod that allows modpack developers to define a default server properties file. This is typically used for settings like the default_level_type.",
+  "authors": [
+    "ErrorMikey",
+    "Nanite Team"
+  ],
+  "contact": {
+    "homepage": "https://github.com/nanite/Default-Server-Properties",
+    "sources": "https://github.com/nanite/Default-Server-Properties"
+  },
+  "license": "Mozilla Public License 2.0",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "dev.nanite.dsp.DSPMod::init"
+    ]
+  },
+  "mixins": [
+    "dsp.mixins.json",
+    "dsp-common.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=${mcversion}"
+  }
+}
