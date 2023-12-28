@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "Mozilla Public License 2.0"
+issueTrackerURL="https://github.com/nanite/Default-Server-Properties/issues"
+
+[[mods]]
+modId = "dsp"
+version = "${version}"
+authors = "ErrorMikey"
+credits = "Nanite Team"
+displayName = "Default Server Properties"
+description = '''
+Simple mod that allows modpack developers to define a default server properties file. This is typically used for settings like the default_level_type.
+'''
+displayTest="IGNORE_ALL_VERSION"
+
+[[dependencies.dsp]]
+modId = "neoforge"
+mandatory = true
+versionRange = "[20.2,)"
+ordering = "NONE"
+side = "SERVER"
+
+[[dependencies.dsp]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.2,)"
+ordering = "NONE"
+side = "SERVER"
+
+[[mixins]]
+config = "dsp-common.mixins.json"
+
+[[mixins]]
+config = "dsp.mixins.json"
