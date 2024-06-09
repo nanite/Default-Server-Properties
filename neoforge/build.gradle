@@ -9,7 +9,7 @@ architectury {
 
 repositories {
     maven {
-        url "https://maven.saps.dev/mirror"
+        url "https://maven.neoforged.net/releases"
     }
 }
 
@@ -36,17 +36,12 @@ dependencies {
 }
 
 processResources {
-    def forgeMajor = ((String) rootProject.forge_version).split("-").last().split("\\.").first()
     inputs.properties([
             version: project.version,
-            mcversion: rootProject.minecraft_version,
-            forgemajor: forgeMajor
     ])
 
-    filesMatching("META-INF/mods.toml") {
-        expand "version": project.version,
-                "mcversion": rootProject.minecraft_version,
-                "forgemajor": forgeMajor
+    filesMatching("META-INF/neoforge.mods.toml") {
+        expand "version": project.version
     }
 }
 
