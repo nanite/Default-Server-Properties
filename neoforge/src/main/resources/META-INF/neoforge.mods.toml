@@ -17,14 +17,14 @@ displayTest="IGNORE_ALL_VERSION"
 [[dependencies.dsp]]
 modId = "neoforge"
 required = true
-versionRange = "[20.6,)"
+versionRange = "[21.0,)"
 ordering = "NONE"
 side = "SERVER"
 
 [[dependencies.dsp]]
 modId = "minecraft"
 required = true
-versionRange = "[1.20.6,)"
+versionRange = "[1.21,)"
 ordering = "NONE"
 side = "SERVER"
 
