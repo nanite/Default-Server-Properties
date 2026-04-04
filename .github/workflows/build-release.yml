@@ -17,3 +17,4 @@ jobs:
       nanite-token: ${{ secrets.NANITE_DEPLOY }}
       curse-token: ${{ secrets.CURSE_DEPLOY }}
       modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
