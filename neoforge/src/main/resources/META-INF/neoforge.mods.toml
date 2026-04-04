@@ -4,7 +4,7 @@ license = "Mozilla Public License 2.0"
 issueTrackerURL="https://github.com/nanite/Default-Server-Properties/issues"
 
 [[mods]]
-modId = "dsp"
+modId = "${mod_id}"
 version = "${version}"
 authors = "ErrorMikey"
 credits = "Nanite Team"
@@ -30,6 +30,3 @@ side = "SERVER"
 
 [[mixins]]
 config = "dsp-common.mixins.json"
-
-[[mixins]]
-config = "dsp.mixins.json"

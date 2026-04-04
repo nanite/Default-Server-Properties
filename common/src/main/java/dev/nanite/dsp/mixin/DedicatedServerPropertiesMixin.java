@@ -1,7 +1,7 @@
 package dev.nanite.dsp.mixin;
 
-import dev.nanite.dsp.DSPExpectedPlatform;
 import dev.nanite.dsp.DSPMod;
+import dev.nanite.dsp.platform.Platform;
 import net.minecraft.server.dedicated.DedicatedServerProperties;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,13 +16,13 @@ import java.nio.file.Path;
 public abstract class DedicatedServerPropertiesMixin {
     @Inject(at = @At("HEAD"), method = "fromFile(Ljava/nio/file/Path;)Lnet/minecraft/server/dedicated/DedicatedServerProperties;", cancellable = true)
     private static void fromFile(Path path, CallbackInfoReturnable<DedicatedServerProperties> info) {
-        Path defaultSettingPath = DSPExpectedPlatform.getGameDir().resolve("default-server.properties");
+        Path defaultSettingPath = Platform.INSTANCE.getGameDir().resolve("default-server.properties");
         if (!Files.exists(defaultSettingPath)) {
             DSPMod.LOGGER.info("No default-server.properties exist in the games root path... ignoring default injection");
             return;
         }
 
-        Path localMarkerFile = DSPExpectedPlatform.getGameDir().resolve("local/default-used.marker");
+        Path localMarkerFile = Platform.INSTANCE.getGameDir().resolve("local/default-used.marker");
         if (Files.exists(localMarkerFile)) {
             DSPMod.LOGGER.info("Default server properties injection ignored as it has already been run. This is not an error. This is correct behaviour.");
             return;

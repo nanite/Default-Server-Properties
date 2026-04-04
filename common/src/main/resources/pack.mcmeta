@@ -1,6 +1,6 @@
 {
   "pack": {
-    "description": "DSP Mod",
+    "description": "${mod_id} Mod",
     "pack_format": 8
   }
 }
