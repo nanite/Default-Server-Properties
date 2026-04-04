@@ -1,7 +1,8 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.6-SNAPSHOT" apply false
-    id "me.modmuss50.mod-publish-plugin" version "0.4.5"
+    id "me.modmuss50.mod-publish-plugin" version "0.5.1"
+    id 'pro.mikey.plugins.insaniam' version "0.1-SNAPSHOT"
 }
 
 architectury {
@@ -29,9 +30,6 @@ allprojects {
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
 
-    def ENV = System.getenv()
-    ext.ENV = ENV
-
     archivesBaseName = rootProject.archives_base_name
     version = rootProject.mod_version
     group = rootProject.maven_group
@@ -55,12 +53,13 @@ allprojects {
 
     publishing {
         repositories {
-            if (ENV.NANITE_TOKEN) {
+            def naniteToken = providers.environmentVariable("NANITE_TOKEN")
+            if (naniteToken.isPresent()) {
                 maven {
                     url "https://maven.nanite.dev/releases"
                     credentials {
                         username = "nanite"
-                        password = "${ENV.NANITE_TOKEN}"
+                        password = naniteToken.get()
                     }
                 }
             }
@@ -68,27 +67,28 @@ allprojects {
     }
 }
 
+def changelogData = insaniamUtils.createChangelog {
+    file = file('CHANGELOG.md')
+    versionPattern = ~/## \[[^]]+]/
+    fallbackValue = "No changelog provided"
+    version = project.mod_version
+}
+
 publishMods {
     dryRun = providers.environmentVariable("CURSE_TOKEN").getOrNull() == null
-    changelog = file("./CHANGELOG.md").text
+    changelog = changelogData
     version = "${mod_version}"
     type = STABLE
 
     def fabricOptions = publishOptions {
         file = project.provider { project(":fabric").tasks.remapJar }.flatMap { it.archiveFile }
-        displayName = "[FABRIC][${minecraft_version}] Default Server Properties ${mod_version}"
+        displayName = "[FABRIC] Default Server Properties ${mod_version}"
         modLoaders.add("fabric")
     }
 
-//    def forgeOptions = publishOptions {
-//        file = project.provider { project(":forge").tasks.remapJar }.flatMap { it.archiveFile }
-//        displayName = "[FORGE][${minecraft_version}] Default Server Properties ${mod_version}"
-//        modLoaders.add("forge")
-//    }
-
     def neoForge = publishOptions {
         file = project.provider { project(":neoforge").tasks.remapJar }.flatMap { it.archiveFile }
-        displayName = "[NEOFORGE][${minecraft_version}] Default Server Properties ${mod_version}"
+        displayName = "[NEOFORGE] Default Server Properties ${mod_version}"
         modLoaders.add("neoforge")
     }
 
@@ -111,10 +111,6 @@ publishMods {
         }
     }
 
-//    curseforge("curseforgeForge") {
-//        from(curseForgeOptions, forgeOptions)
-//    }
-
     curseforge("curseforgeNeoForge") {
         from(curseForgeOptions, neoForge)
     }
@@ -126,16 +122,11 @@ publishMods {
         }
     }
 
-//    modrinth("modrinthForge") {
-//        from(modrinthOptions, forgeOptions)
-//    }
-
     modrinth("modrinthNeoforge") {
         from(modrinthOptions, neoForge)
     }
 
     github {
-//        file = project.provider { project(":forge").tasks.remapJar }.flatMap { it.archiveFile }
         file = project.provider { project(":neoforge").tasks.remapJar }.flatMap { it.archiveFile }
         additionalFiles.from project.provider { project(":fabric").tasks.remapJar }.flatMap { it.archiveFile }
 
