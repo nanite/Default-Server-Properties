@@ -1,6 +1,14 @@
 plugins {
-    id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.2-SNAPSHOT" apply false
+    id "architectury-plugin" version "3.5-SNAPSHOT"
+    id "me.modmuss50.mod-publish-plugin" version "2.1.1"
+    id "dev.architectury.loom" version "1.17-SNAPSHOT" apply false
+    id "dev.nanite.nanite-plugin" version "0.1.0-SNAPSHOT"
+}
+
+nanite {
+    changelog {
+        file = file("./CHANGELOG.md")
+    }
 }
 
 architectury {
@@ -31,7 +39,9 @@ allprojects {
     def ENV = System.getenv()
     ext.ENV = ENV
 
-    archivesBaseName = rootProject.archives_base_name
+    base {
+        archivesName = rootProject.archives_base_name
+    }
     version = rootProject.mod_version
     group = rootProject.maven_group
 
@@ -53,4 +63,68 @@ allprojects {
     }
 }
 
-task curseforgePublish
+publishMods {
+    dryRun = providers.environmentVariable("CURSE_TOKEN").getOrNull() == null
+    changelog = tasks.named("createChangelog").flatMap { it.outputFile }.map { it.asFile.text }
+    version = "${mod_version}"
+    type = STABLE
+
+    def fabricOptions = publishOptions {
+        file = project.provider { project(":fabric").tasks.remapJar }.flatMap { it.archiveFile }
+        displayName = "Default Server Properties ${mod_version} for Fabric"
+        modLoaders.add("fabric")
+    }
+
+    def forge = publishOptions {
+        file = project.provider { project(":forge").tasks.remapJar }.flatMap { it.archiveFile }
+        displayName = "Default Server Properties ${mod_version} for Forge"
+        modLoaders.add("forge")
+    }
+
+    def curseForgeOptions = curseforgeOptions {
+        accessToken = providers.environmentVariable("CURSE_TOKEN")
+        projectId = "${curseforge_id}"
+        minecraftVersions.add("${minecraft_version}")
+        server = true
+        client = false
+    }
+
+    def modrinthOptions = modrinthOptions {
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        projectId = "${modrinth_id}"
+        minecraftVersions.add("${minecraft_version}")
+        environment = SERVER_ONLY
+    }
+
+    curseforge("curseforgeFabric") {
+        from(curseForgeOptions, fabricOptions)
+        requires {
+            slug = "fabric-api"
+        }
+    }
+
+    curseforge("curseforgeForge") {
+        from(curseForgeOptions, forge)
+    }
+
+    modrinth("modrinthFabric") {
+        from(modrinthOptions, fabricOptions)
+        requires {
+            slug = "fabric-api"
+        }
+    }
+
+    modrinth("modrinthForge") {
+        from(modrinthOptions, forge)
+    }
+
+    github {
+        file = project.provider { project(":forge").tasks.remapJar }.flatMap { it.archiveFile }
+        additionalFiles.from project.provider { project(":fabric").tasks.remapJar }.flatMap { it.archiveFile }
+
+        repository = "${project.github_repo}"
+        accessToken = providers.environmentVariable("GITHUB_TOKEN")
+        commitish = providers.environmentVariable("GITHUB_SHA").orElse("dryRun")
+        tagName = providers.environmentVariable("GITHUB_REF_NAME").orElse("dryRun")
+    }
+}
