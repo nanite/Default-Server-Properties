@@ -114,6 +114,8 @@ publishMods {
         accessToken = providers.environmentVariable("CURSE_TOKEN")
         projectId = "${curseforge_id}"
         minecraftVersions.add("${minecraft_version}")
+        minecraftVersions.add("26.1.1")
+        minecraftVersions.add("26.1.2")
         server = true
         client = false
     }
@@ -122,6 +124,8 @@ publishMods {
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
         projectId = "${modrinth_id}"
         minecraftVersions.add("${minecraft_version}")
+        minecraftVersions.add("26.1.1")
+        minecraftVersions.add("26.1.2")
         environment = SERVER_ONLY
     }
 
