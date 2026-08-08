@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'fabric-loom' version '1.15-SNAPSHOT' apply(false)
     id 'net.neoforged.moddev' version '2.0.141' apply(false)
-    id "me.modmuss50.mod-publish-plugin" version "1.1.0"
+    id "me.modmuss50.mod-publish-plugin" version "2.1.1"
     id 'pro.mikey.plugins.insaniam' version "0.1-SNAPSHOT"
 }
 
@@ -100,13 +100,13 @@ publishMods {
 
     def fabricOptions = publishOptions {
         file = project.provider { project(":fabric").tasks.jar }.flatMap { it.archiveFile }
-        displayName = "[FABRIC] Default Server Properties ${mod_version}"
+        displayName = "Default Server Properties ${mod_version} for Fabric"
         modLoaders.add("fabric")
     }
 
     def neoForge = publishOptions {
         file = project.provider { project(":neoforge").tasks.jar }.flatMap { it.archiveFile }
-        displayName = "[NEOFORGE] Default Server Properties ${mod_version}"
+        displayName = "Default Server Properties ${mod_version} for NeoForge"
         modLoaders.add("neoforge")
     }
 
@@ -114,14 +114,15 @@ publishMods {
         accessToken = providers.environmentVariable("CURSE_TOKEN")
         projectId = "${curseforge_id}"
         minecraftVersions.add("${minecraft_version}")
-        minecraftVersions.add("26.1.1")
+        server = true
+        client = false
     }
 
     def modrinthOptions = modrinthOptions {
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
         projectId = "${modrinth_id}"
         minecraftVersions.add("${minecraft_version}")
-        minecraftVersions.add("26.1.1")
+        environment = SERVER_ONLY
     }
 
     curseforge("curseforgeFabric") {
