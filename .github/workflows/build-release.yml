@@ -1,17 +1,18 @@
-name: Build & Release
+name: Release
 
 on:
   push:
     tags:
-      - 'release/**/*'
+      - "v*"
 
 jobs:
   build:
     if: |
       !contains(github.event.head_commit.message, '[ciskip]')
-    uses: nanite/workflows/.github/workflows/release.yml@v1.2
+    uses: nanite/workflows/.github/workflows/release.yml@v1.3
     with:
-      gradle-tasks: 'build publish publishMods'
+      java-version: 21
+      gradle-tasks: build publish publishMods
     secrets:
       nanite-token: ${{ secrets.NANITE_DEPLOY }}
       curse-token: ${{ secrets.CURSE_DEPLOY }}
